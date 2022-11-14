@@ -1,0 +1,7 @@
+.element {
+  display: flex;
+  flex-flow: column;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0;
+}
