@@ -1,12 +1,8 @@
-/* * {
-    outline: 1px solid #ff3300;
-} */
-
 @import url('../vendor/normalize.css');
 @import url('../vendor/fonts/font.css');
 
+@import url('../blocks/body/body.css');
 @import url('../blocks/page/page.css');
-@import url('../blocks/page/__content/page__content.css');
 
 @import url('../blocks/header/__logo/header__logo.css');
 @import url('../blocks/header/__line/header__line.css');
