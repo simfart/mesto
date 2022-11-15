@@ -8,17 +8,12 @@
   border-radius: 10px;
   box-sizing: border-box;
   max-width: 430px;
-  max-height: 330px;
-  top: 195px;
-  margin: 0 auto;
   position: relative;
 }
 
 @media screen and (max-width: 600px) {
-  .popup__conteiner {
-    top: 123px;
+  .popup__conteiner { 
     max-width: 282px;
-    max-height: 322px;
     padding: 25px 22px;
   }
 }
