@@ -16,7 +16,7 @@ const closePopup = () => popupElement.classList.remove("popup_opened");
 
 
 
-const formElement = document.querySelector(".popup__conteiner");
+const formElement = document.querySelector('[name="formPopup"]');
 const nameInput = formElement.querySelector(".popup__item_el_heading");
 const jobInput = formElement.querySelector(".popup__item_el_subheading");
 
