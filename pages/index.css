@@ -33,3 +33,8 @@
 @import url('../blocks/popup/__item/popup__item.css');
 @import url('../blocks/popup/__button/popup__button.css');
 @import url('../blocks/popup/__close/popup__close.css');
+
+.element__photo{
+    height: 282px;
+}
+
