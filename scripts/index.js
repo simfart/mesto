@@ -67,6 +67,29 @@ const initialCards = [
 const cardContainer = document.querySelector('.elements')
 const elemTemplate = document.querySelector('#element-template').content; //template из HTML в переменную
 
+function submitFormtHandlerCards(evt) {
+  evt.preventDefault();
+  const newCardElement = elemTemplate.cloneNode(true);
+  let newCard = {
+    name: cardName.value,
+    link: cardLink.value
+  }
+
+  newCardElement.querySelector('.element__title').textContent = newCard.name
+  newCardElement.querySelector('.element__photo').src = newCard.link
+  
+
+  newCardElement.btnsLike.addEventListener('click', function (e) {
+    console.log(e.target)});
+
+    cardContainer.prepend(newCardElement)
+
+  cardName.value = '';
+  cardLink.value = '';
+
+  closePopup();
+}
+
 // Карточки при открытии страницы
 initialCards.forEach(function (element) {
   const cardOpenedElement = elemTemplate.cloneNode(true);
@@ -86,30 +109,29 @@ const cardLink = cardElement.querySelector(".popup__item_el_cardLink");
 
 // const allNewElements = Array.from(document.querySelectorAll(".element"))
 
-function submitFormtHandlerCards(evt) {
-  evt.preventDefault();
-  const newCardElement = elemTemplate.cloneNode(true);
-  let newCard = {
-    name: cardName.value,
-    link: cardLink.value
-  }
 
-  newCardElement.querySelector('.element__title').textContent = newCard.name
-  newCardElement.querySelector('.element__photo').src = newCard.link
-  cardContainer.insertBefore(newCardElement, cardContainer.firstChild)
-  // allNewElements.push(newCard)
-
-  cardName.value = '';
-  cardLink.value = '';
-
-  closePopup();
-}
 
 // deleteButton.addEventListener('click', function (evt) {
 //   const eventTarget = evt.target;
 //    eventTarget.remove();
 // }); 
+const btnDelete = document.querySelector('.element__trash');
+const btnsLike = document.querySelectorAll('.element__button');
 
+for (let btn of btnsLike) {
+  btn.addEventListener('click', (e) => {
+    console.log(e.target.closest('.element'))
+   })
+  }
+
+// const handleLikeBtnClick = (e) => {
+//   console.log(e.target.closest('.element'))
+//   }
+
+//   const handleDeleteBtnClick = (e) => {
+//     console.log(e.target)
+//   }
+  
 
 // deleteBtn.addEventListener('click',handleDeleteBtnClick)
 // likeBtn.addEventListener('click',handleLikeBtnClick)
@@ -133,33 +155,7 @@ btnPopupProfile.addEventListener("click", openProfilePopup);
 btnPopupCards.addEventListener("click", openCardslePopup);
 formElement.addEventListener("submit", submitFormtHandler);
 
-const btnDelete = document.querySelector('.element__trash');
-const btnsLike = document.querySelectorAll('.element__button');
 
-for (let btn of btnsLike) {
-  btn.addEventListener('click', (e) => {
-    console.log(e.target.closest('.element'))
-  // let delegateTarget = e.target.nextElementSibling
-  // delegateTarget.classList.add('active');
-  
-  // for (let list of lists){
-  // if(list!==delegateTarget){
-  // list.classList.remove('active')
-  // }
-  // }
-  
-  
-  })
-  }
-
-const handleLikeBtnClick = (e) => {
-  console.log(e.target.closest('.element'))
-  }
-
-  const handleDeleteBtnClick = (e) => {
-    console.log(e.target)
-  }
-  
 btnClose.forEach(function (elem) {
   elem.addEventListener("click", function () {
     closePopup()
