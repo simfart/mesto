@@ -29,11 +29,11 @@ function submitFormtHandler(evt) {
 
 //Закрытие всех попапов
 const closePopup = () => {
-popupElement.forEach((item, index) => {
-  if (item.classList.contains('popup_opened')) {
-    popupElement[index].classList.remove('popup_opened');
-  }
-})
+  popupElement.forEach((item, index) => {
+    if (item.classList.contains('popup_opened')) {
+      popupElement[index].classList.remove('popup_opened');
+    }
+  })
 }
 
 
@@ -68,12 +68,12 @@ const cardContainer = document.querySelector('.elements')
 const elemTemplate = document.querySelector('#element-template').content; //template из HTML в переменную
 
 // Карточки при открытии страницы
-    initialCards.forEach(function (element) { 
-    const cardElement = elemTemplate.cloneNode(true);  
-    cardElement.querySelector('.element__title').textContent = element.name // значение title каждого перебираемого элемента;
-    cardElement.querySelector('.element__photo').src = element.link // значение src каждого перебираемого элемента;
-    cardContainer.append(cardElement) // добавляем в section elements
-    });
+initialCards.forEach(function (element) {
+  const cardOpenedElement = elemTemplate.cloneNode(true);
+  cardOpenedElement.querySelector('.element__title').textContent = element.name // значение title каждого перебираемого элемента;
+  cardOpenedElement.querySelector('.element__photo').src = element.link // значение src каждого перебираемого элемента;
+  cardContainer.append(cardOpenedElement) // добавляем в section elements
+});
 
 //Ф-ция открытия попапа редактирования карточек
 const openCardslePopup = () => {
@@ -84,57 +84,84 @@ const cardElement = document.querySelector('[name="cardPopup"]');
 const cardName = cardElement.querySelector(".popup__item_el_cardHeading");
 const cardLink = cardElement.querySelector(".popup__item_el_cardLink");
 
+// const allNewElements = Array.from(document.querySelectorAll(".element"))
+
 function submitFormtHandlerCards(evt) {
   evt.preventDefault();
-  let newCardElement = elemTemplate.cloneNode(true); 
+  const newCardElement = elemTemplate.cloneNode(true);
   let newCard = {
     name: cardName.value,
     link: cardLink.value
   }
-   
-  newCardElement.querySelector('.element__title').textContent = newCard.name // значение title каждого перебираемого элемента;
-  newCardElement.querySelector('.element__photo').src = newCard.link 
+
+  newCardElement.querySelector('.element__title').textContent = newCard.name
+  newCardElement.querySelector('.element__photo').src = newCard.link
   cardContainer.insertBefore(newCardElement, cardContainer.firstChild)
-  
+  // allNewElements.push(newCard)
+
   cardName.value = '';
   cardLink.value = '';
 
   closePopup();
 }
 
+// deleteButton.addEventListener('click', function (evt) {
+//   const eventTarget = evt.target;
+//    eventTarget.remove();
+// }); 
+
+
+// deleteBtn.addEventListener('click',handleDeleteBtnClick)
+// likeBtn.addEventListener('click',handleLikeBtnClick)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 cardElement.addEventListener("submit", submitFormtHandlerCards);
 
+btnPopupProfile.addEventListener("click", openProfilePopup);
+btnPopupCards.addEventListener("click", openCardslePopup);
+formElement.addEventListener("submit", submitFormtHandler);
 
-/*     let car = {
-      name: 'Озеро',
-      link: 'https://s1.1zoom.ru/big3/984/Canada_Parks_Lake_Mountains_Forests_Scenery_Rocky_567540_3840x2400.jpg'
-    }
-    // let newCard = initialCards.unshift(car);
-    // let newCardElement = elemTemplate.cloneNode(true); выше объявлена
-    newCardElement.querySelector('.element__title').textContent = car.name // значение title каждого перебираемого элемента;
-    newCardElement.querySelector('.element__photo').src = car.link 
-    cardContainer.insertBefore(newCardElement, cardContainer.firstChild)
-    
-    let car2 = {
-      name: 'еще одно',
-      link: 'https://s1.1zoom.ru/big3/984/Canada_Parks_Lake_Mountains_Forests_Scenery_Rocky_567540_3840x2400.jpg'
-    }
-    let newCardElement2 = elemTemplate.cloneNode(true); 
-    newCardElement2.querySelector('.element__title').textContent = car2.name // значение title каждого перебираемого элемента;
-    newCardElement2.querySelector('.element__photo').src = car2.link 
-    cardContainer.insertBefore(newCardElement2, cardContainer.firstChild)
- */
+const btnDelete = document.querySelector('.element__trash');
+const btnsLike = document.querySelectorAll('.element__button');
 
+for (let btn of btnsLike) {
+  btn.addEventListener('click', (e) => {
+    console.log(e.target.closest('.element'))
+  // let delegateTarget = e.target.nextElementSibling
+  // delegateTarget.classList.add('active');
+  
+  // for (let list of lists){
+  // if(list!==delegateTarget){
+  // list.classList.remove('active')
+  // }
+  // }
+  
+  
+  })
+  }
 
+const handleLikeBtnClick = (e) => {
+  console.log(e.target.closest('.element'))
+  }
 
-
-    btnPopupProfile.addEventListener("click", openProfilePopup);
-      btnPopupCards.addEventListener("click", openCardslePopup);
-  formElement.addEventListener("submit", submitFormtHandler);
-
- 
-  btnClose.forEach(function(elem) {
-    elem.addEventListener("click", function() {
-      closePopup()
-    });
+  const handleDeleteBtnClick = (e) => {
+    console.log(e.target)
+  }
+  
+btnClose.forEach(function (elem) {
+  elem.addEventListener("click", function () {
+    closePopup()
+  });
 });
