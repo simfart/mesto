@@ -65,91 +65,80 @@ const initialCards = [
 ];
 
 const cardContainer = document.querySelector('.elements')
-const elemTemplate = document.querySelector('#element-template').content; //template из HTML в переменную
+const cardtemplate = document.querySelector('#element-template').content.querySelector('.element')
+const formCard = document.querySelector('[name="cardPopup"]');
+const formTitleInput = formCard.querySelector('.popup__item_el_cardHeading')
+const formLinkInput = formCard.querySelector('.popup__item_el_cardLink')
 
-function submitFormtHandlerCards(evt) {
-  evt.preventDefault();
-  const newCardElement = elemTemplate.cloneNode(true);
-  let newCard = {
-    name: cardName.value,
-    link: cardLink.value
-  }
 
-  newCardElement.querySelector('.element__title').textContent = newCard.name
-  newCardElement.querySelector('.element__photo').src = newCard.link
-  
+// Создаем новую карточку
+function createCard (item){
 
-  newCardElement.btnsLike.addEventListener('click', function (e) {
-    console.log(e.target)});
+const card = cardtemplate.cloneNode(true)
+const cardLink = card.querySelector('.element__photo')
+const cardTitle = card.querySelector('.element__title')
 
-    cardContainer.prepend(newCardElement)
+const cardLikeBtn = card.querySelector('.element__button')
+const cardDeleteBtn = card.querySelector('.element__trash')
+const img = card.querySelector('.element__photo')
 
-  cardName.value = '';
-  cardLink.value = '';
 
-  closePopup();
+cardLikeBtn.addEventListener('click', handleLikeButtonClick)
+cardDeleteBtn.addEventListener('click', handleDeleteButtonClick)
+
+cardLink.src = item.link
+cardTitle.textContent = item.name
+img.src = item.image
+
+return card
 }
 
-// Карточки при открытии страницы
-initialCards.forEach(function (element) {
-  const cardOpenedElement = elemTemplate.cloneNode(true);
-  cardOpenedElement.querySelector('.element__title').textContent = element.name // значение title каждого перебираемого элемента;
-  cardOpenedElement.querySelector('.element__photo').src = element.link // значение src каждого перебираемого элемента;
-  cardContainer.append(cardOpenedElement) // добавляем в section elements
-});
 
-//Ф-ция открытия попапа редактирования карточек
+const handleLikeButtonClick = (e) => {
+  e.target.classList.toggle('element__button_active')
+}
+
+
+const handleDeleteButtonClick = (e) => {
+  e.target.closest('.element').remove()
+}
+
+
+
+
+
+//Добавляем карточки из массива
+initialCards.forEach(function(item){  
+ const element = createCard(item)
+  cardContainer.append(element)
+}
+)
+
+// Открытие попапа редактирования карточек
 const openCardslePopup = () => {
   popupCardElement.classList.add("popup_opened");
 };
 
-const cardElement = document.querySelector('[name="cardPopup"]');
-const cardName = cardElement.querySelector(".popup__item_el_cardHeading");
-const cardLink = cardElement.querySelector(".popup__item_el_cardLink");
+const submitCardFormtHandler = (e) =>{
+  e.preventDefault();
 
-// const allNewElements = Array.from(document.querySelectorAll(".element"))
-
-
-
-// deleteButton.addEventListener('click', function (evt) {
-//   const eventTarget = evt.target;
-//    eventTarget.remove();
-// }); 
-const btnDelete = document.querySelector('.element__trash');
-const btnsLike = document.querySelectorAll('.element__button');
-
-for (let btn of btnsLike) {
-  btn.addEventListener('click', (e) => {
-    console.log(e.target.closest('.element'))
-   })
+  const card = {
+    name: formTitleInput.value,
+    link: formLinkInput.value
   }
 
-// const handleLikeBtnClick = (e) => {
-//   console.log(e.target.closest('.element'))
-//   }
+  const element = createCard(card)
+  cardContainer.prepend(element)
 
-//   const handleDeleteBtnClick = (e) => {
-//     console.log(e.target)
-//   }
-  
+  formTitleInput.value = '';
+  formLinkInput.value = '';
 
-// deleteBtn.addEventListener('click',handleDeleteBtnClick)
-// likeBtn.addEventListener('click',handleLikeBtnClick)
+  closePopup();
+
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-cardElement.addEventListener("submit", submitFormtHandlerCards);
+formCard.addEventListener("submit", submitCardFormtHandler);
 
 btnPopupProfile.addEventListener("click", openProfilePopup);
 btnPopupCards.addEventListener("click", openCardslePopup);
