@@ -1,7 +1,7 @@
 .popup__info {
   border: 0;
   padding: 0;
-  margin: 42px 0 0 0;
+  margin: 46px 0 0 0;
 }
 
 @media screen and (max-width: 600px) {

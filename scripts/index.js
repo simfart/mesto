@@ -51,7 +51,6 @@ const closePopup = () => {
   })
 }
 
-
 const initialCards = [
   {
     name: 'Архыз',
