@@ -28,15 +28,35 @@ const popupOpenImage = document.querySelector('[name="imagePopup"]');
 const imageOpened = popupOpenImage.querySelector(".popup-image__photo");
 const labelOpened = popupOpenImage.querySelector(".popup-image__label");
 
+// Для закрытия попапов по Esc
+const handleKeyUp = (e) => {
+  const popup = document.querySelector('.popup_opened')
+  if (e.key === 'Escape') {
+    closePopup(popup)
+  }
+}
+
+// Для закрытия попапов по клику на оверлей
+const handleOverlayClick = (e) => {
+  if (!e.target.closest('.popup__conteiner')) {
+    closePopup(e.target.closest('.popup'))
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keyup', handleKeyUp)
+  document.addEventListener('mousedown', handleOverlayClick)
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keyup', handleKeyUp)
+  document.removeEventListener('mousedown', handleOverlayClick)
 }
 
-//Закрытие всех попапов
+
+//Закрытие всех попапов по Х
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
@@ -56,6 +76,7 @@ function submitFormtHandler(evt) {
   textProfileSubtitle.textContent = jobInput.value;
   closePopup(popupProfileElement);
 }
+
 
 const initialCards = [
   {
@@ -112,7 +133,7 @@ const openImage = (e) => {
   labelOpened.textContent =
     e.target.parentNode.querySelector(".element__title").textContent;
   imageOpened.alt = e.target.parentNode.querySelector(".element__title").textContent
-  
+
 };
 
 // Для кнопки like
@@ -132,10 +153,9 @@ initialCards.forEach(function (item) {
 });
 
 // Открытие попапа редактирования карточек
-
 const openCardslePopup = () => {
   openPopup(popupCardElement)
- };
+};
 
 // Для добавленния карточки
 const submitCardFormtHandler = (e) => {
@@ -153,8 +173,13 @@ const submitCardFormtHandler = (e) => {
   closePopup(popupCardElement);
 };
 
+
 formCard.addEventListener("submit", submitCardFormtHandler);
 btnPopupProfile.addEventListener("click", openProfilePopup);
 btnPopupCards.addEventListener("click", openCardslePopup);
 formElement.addEventListener("submit", submitFormtHandler);
+
+
+
+
 
