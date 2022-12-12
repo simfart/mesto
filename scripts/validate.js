@@ -1,6 +1,3 @@
-const formInput = formElement.querySelector(".popup__item");
-const inputs = [...document.querySelectorAll(".popup__item")];
-
 const checkInputValidity = (input, config) => {
     const error = document.querySelector(`#${input.id}-error`);
     if (input.validity.valid) {
@@ -27,8 +24,9 @@ const toggleButton = (inputs, btn, config) => {
 };
 
 const enableValidation = (config) => {
+    const { formSelector, inputSelector, submitButtonSelector, ...restConfig } = config;
     const forms = [...document.querySelectorAll(formSelector)];
-
+    
     forms.forEach((form) => {
         const inputs = [...form.querySelectorAll(inputSelector)];
         const btn = form.querySelector(submitButtonSelector);
@@ -55,7 +53,5 @@ const config = {
     errorClass: "popup__error_visible",
 };
 
-const { formSelector, inputSelector, submitButtonSelector, ...restConfig } =
-    config;
 
 enableValidation(config);

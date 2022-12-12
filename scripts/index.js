@@ -30,9 +30,8 @@ const labelOpened = popupOpenImage.querySelector(".popup-image__label");
 
 // Для закрытия попапов по Esc
 const handleKeyUp = (e) => {
-  const popup = document.querySelector('.popup_opened')
   if (e.key === 'Escape') {
-    closePopup(popup)
+    closePopup(document.querySelector('.popup_opened'))
   }
 }
 
@@ -65,8 +64,8 @@ closeButtons.forEach((button) => {
 //Ф-ция открытия попапа редактирования имени
 const openProfilePopup = () => {
   openPopup(popupProfileElement)
-  nameInput.value = ("value", textProfileTitle.textContent);
-  jobInput.value = ("value", textProfileSubtitle.textContent);
+  nameInput.value = textProfileTitle.textContent;
+  jobInput.value = textProfileSubtitle.textContent;
 };
 
 // обработчик формы
@@ -128,12 +127,11 @@ function createCard(item) {
 
 // Открытие картинки
 const openImage = (e) => {
-  openPopup(popupOpenImage);
   imageOpened.src = e.target.src;
   labelOpened.textContent =
     e.target.parentNode.querySelector(".element__title").textContent;
   imageOpened.alt = e.target.parentNode.querySelector(".element__title").textContent
-
+  openPopup(popupOpenImage);
 };
 
 // Для кнопки like
@@ -169,8 +167,9 @@ const submitCardFormtHandler = (e) => {
   const element = createCard(card);
   cardContainer.prepend(element);
 
-  e.target.reset();
   closePopup(popupCardElement);
+  
+  e.target.reset();
 };
 
 
