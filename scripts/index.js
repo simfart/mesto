@@ -1,5 +1,7 @@
+import { initialCards } from "./cards.js";
+
 const popupElements = Array.from(document.querySelectorAll(".popup"));
-const closeButtons = document.querySelectorAll('.popup__close');
+const closeButtons = document.querySelectorAll(".popup__close");
 
 // Переменные для попапа редактирования профиля
 const popupProfileElement = document.querySelector(
@@ -30,42 +32,41 @@ const labelOpened = popupOpenImage.querySelector(".popup-image__label");
 
 // Для закрытия попапов по Esc
 const handleKeyUp = (e) => {
-  if (e.key === 'Escape') {
-    closePopup(document.querySelector('.popup_opened'))
+  if (e.key === "Escape") {
+    closePopup(document.querySelector(".popup_opened"));
   }
-}
+};
 
 // Для закрытия попапов по клику на оверлей
 const handleOverlayClick = (e) => {
-  if (!e.target.closest('.popup__conteiner')) {
-    closePopup(e.target.closest('.popup'))
+  if (!e.target.closest(".popup__conteiner")) {
+    closePopup(e.target.closest(".popup"));
   }
-}
+};
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  document.addEventListener('keyup', handleKeyUp)
-  document.addEventListener('mousedown', handleOverlayClick)
+  document.addEventListener("keyup", handleKeyUp);
+  document.addEventListener("mousedown", handleOverlayClick);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener('keyup', handleKeyUp)
-  document.removeEventListener('mousedown', handleOverlayClick)
+  document.removeEventListener("keyup", handleKeyUp);
+  document.removeEventListener("mousedown", handleOverlayClick);
 }
-
 
 //Закрытие всех попапов по Х
 closeButtons.forEach((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
+  const popup = button.closest(".popup");
+  button.addEventListener("click", () => closePopup(popup));
 });
 
 //Ф-ция открытия попапа редактирования имени
 const openProfilePopup = () => {
-  openPopup(popupProfileElement)
   nameInput.value = textProfileTitle.textContent;
   jobInput.value = textProfileSubtitle.textContent;
+  openPopup(popupProfileElement);
 };
 
 // обработчик формы
@@ -75,34 +76,6 @@ function submitFormtHandler(evt) {
   textProfileSubtitle.textContent = jobInput.value;
   closePopup(popupProfileElement);
 }
-
-
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
 // Создаем новую карточку
 function createCard(item) {
@@ -120,17 +93,18 @@ function createCard(item) {
   cardLink.alt = item.name;
   cardTitle.textContent = item.name;
 
-  cardLink.addEventListener("click", openImage);
+  cardLink.addEventListener("click", () => {
+    openImage(item);
+  });
 
   return card;
 }
 
 // Открытие картинки
-const openImage = (e) => {
-  imageOpened.src = e.target.src;
-  labelOpened.textContent =
-    e.target.parentNode.querySelector(".element__title").textContent;
-  imageOpened.alt = e.target.parentNode.querySelector(".element__title").textContent
+const openImage = (card) => {
+  imageOpened.src = card.link;
+  labelOpened.textContent = card.name;
+  imageOpened.alt = card.name;
   openPopup(popupOpenImage);
 };
 
@@ -152,7 +126,7 @@ initialCards.forEach(function (item) {
 
 // Открытие попапа редактирования карточек
 const openCardslePopup = () => {
-  openPopup(popupCardElement)
+  openPopup(popupCardElement);
 };
 
 // Для добавленния карточки
@@ -168,17 +142,11 @@ const submitCardFormtHandler = (e) => {
   cardContainer.prepend(element);
 
   closePopup(popupCardElement);
-  
+
   e.target.reset();
 };
-
 
 formCard.addEventListener("submit", submitCardFormtHandler);
 btnPopupProfile.addEventListener("click", openProfilePopup);
 btnPopupCards.addEventListener("click", openCardslePopup);
 formElement.addEventListener("submit", submitFormtHandler);
-
-
-
-
-
