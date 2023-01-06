@@ -1,12 +1,10 @@
-import {openPopup} from './index.js'
-import {imageOpened, labelOpened, popupOpenImage} from './constants.js'
-
 export default class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._alt = data.alt;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
   _getTemplate() {
     // забираем разметку из HTML и клонируем элемент
@@ -23,52 +21,42 @@ export default class Card {
     // Запишем разметку в приватное поле _element.
     // Так у других элементов появится доступ к ней.
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector(".element__photo");
     this._setEventListeners();
 
     // Добавим данные
-    this._element.querySelector(".element__photo").src = this._link;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._element.querySelector(".element__title").textContent = this._name;
 
     // Вернём элемент наружу
     return this._element;
   }
-  // Открытие картинки
-  _openImage() {
-    imageOpened.src = this._link;
-    labelOpened.textContent = this._name;
-    imageOpened.alt = this._name;
-    openPopup(popupOpenImage);
-  }
 
   _setEventListeners() {
-    this._element
-      .querySelector(".element__button")
-      .addEventListener("click", () => {
-        this._handleLikeButtonClick();
-      });
+    this._likeButton = this._element.querySelector(".element__button");
+    this._trashButton = this._element.querySelector(".element__trash");
 
-    this._element
-      .querySelector(".element__trash")
-      .addEventListener("click", () => {
-        this._handleDeleteButtonClick();
-      });
+    this._likeButton.addEventListener("click", () => {
+      this._handleLikeButtonClick();
+    });
 
-    this._element
-      .querySelector(".element__photo")
-      .addEventListener("click", () => {
-        this._openImage();
-      });
+    this._trashButton.addEventListener("click", () => {
+      this._handleDeleteButtonClick();
+    });
+
+    this._cardImage.addEventListener("click", () => {
+      this._handleCardClick(this._name, this._link);
+    });
   }
 
   // Для кнопки like
   _handleLikeButtonClick() {
-    this._element
-      .querySelector(".element__button")
-      .classList.toggle("element__button_active");
+    this._likeButton.classList.toggle("element__button_active");
   }
 
   // Для кнопки trash
   _handleDeleteButtonClick() {
-    this._element.querySelector(".element__trash").closest(".element").remove();
+    this._trashButton.closest(".element").remove();
   }
 }

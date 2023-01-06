@@ -12,8 +12,9 @@ const handleKeyUp = (e) => {
 
 // Для закрытия попапов по клику на оверлей
 const handleOverlayClick = (e) => {
-  if (!e.target.closest(".popup__conteiner")) {
-    closePopup(e.target.closest(".popup"));
+  const openedPopup = document.querySelector('.popup_opened');
+  if (openedPopup && e.target === openedPopup) {
+    closePopup(openedPopup);
   }
 };
 
@@ -40,11 +41,14 @@ const openProfilePopup = () => {
   nameInput.value = textProfileTitle.textContent;
   jobInput.value = textProfileSubtitle.textContent;
   openPopup(popupProfileElement);
+  formProfileValid.resetValidation();
 };
 
 // Открытие попапа редактирования карточек
 const openCardslePopup = () => {
   openPopup(popupCardElement);
+  popupCardValid.resetValidation();
+  formCard.reset()
 };
 
 // обработчик формы
@@ -58,7 +62,7 @@ function submitFormtHandler(evt) {
 // Новая карточка
 function newCard(item) {
   // Создадим экземпляр карточки
-  const card = new Card(item, "#element-template");
+  const card = new Card(item, "#element-template", handleCardClick);
   // Создаём карточку и возвращаем наружу
   return card.generateCard();
 }
@@ -89,6 +93,12 @@ const submitCardFormtHandler = (e) => {
   e.target.reset();
 };
 
+function handleCardClick(name, link) {
+  imageOpened.src = link;
+  labelOpened.textContent = name;
+  imageOpened.alt = name;
+  openPopup(popupOpenImage);
+}
 
 
 formCard.addEventListener("submit", submitCardFormtHandler);
