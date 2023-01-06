@@ -1,34 +1,7 @@
+import { popupElements, closeButtons, popupProfileElement, btnPopupProfile, textProfileTitle, textProfileSubtitle, formElement, nameInput, jobInput, popupCardElement, btnPopupCards, cardContainer, formCard, formTitleInput, formLinkInput, popupOpenImage, imageOpened, labelOpened, config } from './constants.js'
 import { initialCards } from "./cards.js";
-
-const popupElements = Array.from(document.querySelectorAll(".popup"));
-const closeButtons = document.querySelectorAll(".popup__close");
-
-// Переменные для попапа редактирования профиля
-const popupProfileElement = document.querySelector(
-  '[name="popup_add_profile"]'
-);
-const btnPopupProfile = document.querySelector(".profile__edit-button");
-const textProfileTitle = document.querySelector(".profile__title");
-const textProfileSubtitle = document.querySelector(".profile__subtitle");
-const formElement = document.querySelector('[name="formPopup"]');
-const nameInput = formElement.querySelector(".popup__item_el_heading");
-const jobInput = formElement.querySelector(".popup__item_el_subheading");
-
-// Переменные для попапа добавления карточек
-const popupCardElement = document.querySelector('[name="popup_add_card"]');
-const btnPopupCards = document.querySelector(".profile__add-button");
-const cardContainer = document.querySelector(".elements");
-const cardtemplate = document
-  .querySelector("#element-template")
-  .content.querySelector(".element");
-const formCard = document.querySelector('[name="cardPopup"]');
-const formTitleInput = formCard.querySelector(".popup__item_el_cardHeading");
-const formLinkInput = formCard.querySelector(".popup__item_el_cardLink");
-
-// Переменные для попапа изображения
-const popupOpenImage = document.querySelector('[name="imagePopup"]');
-const imageOpened = popupOpenImage.querySelector(".popup-image__photo");
-const labelOpened = popupOpenImage.querySelector(".popup-image__label");
+import FormValidator from './FormValidator.js';
+import Card from './Card.js';
 
 // Для закрытия попапов по Esc
 const handleKeyUp = (e) => {
@@ -44,7 +17,7 @@ const handleOverlayClick = (e) => {
   }
 };
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("mousedown", handleOverlayClick);
@@ -69,6 +42,11 @@ const openProfilePopup = () => {
   openPopup(popupProfileElement);
 };
 
+// Открытие попапа редактирования карточек
+const openCardslePopup = () => {
+  openPopup(popupCardElement);
+};
+
 // обработчик формы
 function submitFormtHandler(evt) {
   evt.preventDefault();
@@ -77,59 +55,24 @@ function submitFormtHandler(evt) {
   closePopup(popupProfileElement);
 }
 
-// Создаем новую карточку
-function createCard(item) {
-  const card = cardtemplate.cloneNode(true);
-  const cardLink = card.querySelector(".element__photo");
-  const cardTitle = card.querySelector(".element__title");
-
-  const cardLikeBtn = card.querySelector(".element__button");
-  const cardDeleteBtn = card.querySelector(".element__trash");
-
-  cardLikeBtn.addEventListener("click", handleLikeButtonClick);
-  cardDeleteBtn.addEventListener("click", handleDeleteButtonClick);
-
-  cardLink.src = item.link;
-  cardLink.alt = item.name;
-  cardTitle.textContent = item.name;
-
-  cardLink.addEventListener("click", () => {
-    openImage(item);
-  });
-
-  return card;
+// Новая карточка
+function newCard(item) {
+  // Создадим экземпляр карточки
+  const card = new Card(item, "#element-template");
+  // Создаём карточку и возвращаем наружу
+  return card.generateCard();
 }
 
-// Открытие картинки
-const openImage = (card) => {
-  imageOpened.src = card.link;
-  labelOpened.textContent = card.name;
-  imageOpened.alt = card.name;
-  openPopup(popupOpenImage);
-};
 
-// Для кнопки like
-const handleLikeButtonClick = (e) => {
-  e.target.classList.toggle("element__button_active");
-};
-
-// Для кнопки trash
-const handleDeleteButtonClick = (e) => {
-  e.target.closest(".element").remove();
-};
-
-//Добавляем карточки из массива
+//Добавление карточек из массива
 initialCards.forEach(function (item) {
-  const element = createCard(item);
-  cardContainer.append(element);
+  const cardElement = newCard(item);
+  // Добавляем в DOM
+  cardContainer.append(cardElement);
 });
 
-// Открытие попапа редактирования карточек
-const openCardslePopup = () => {
-  openPopup(popupCardElement);
-};
 
-// Для добавленния карточки
+//Добавление карточек из  попапа
 const submitCardFormtHandler = (e) => {
   e.preventDefault();
 
@@ -138,7 +81,7 @@ const submitCardFormtHandler = (e) => {
     link: formLinkInput.value,
   };
 
-  const element = createCard(card);
+  const element = newCard(card);
   cardContainer.prepend(element);
 
   closePopup(popupCardElement);
@@ -146,7 +89,16 @@ const submitCardFormtHandler = (e) => {
   e.target.reset();
 };
 
+
+
 formCard.addEventListener("submit", submitCardFormtHandler);
 btnPopupProfile.addEventListener("click", openProfilePopup);
 btnPopupCards.addEventListener("click", openCardslePopup);
 formElement.addEventListener("submit", submitFormtHandler);
+
+
+const formProfileValid = new FormValidator(config, formElement);
+formProfileValid.enableValidation();
+
+const popupCardValid = new FormValidator(config, popupCardElement);
+popupCardValid.enableValidation();
