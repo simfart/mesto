@@ -57,6 +57,7 @@ export default class Card {
 
   // Для кнопки trash
   _handleDeleteButtonClick() {
-    this._trashButton.closest(".element").remove();
+    this._element.remove();
+    this._element = null
   }
 }
