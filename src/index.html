@@ -15,15 +15,16 @@
       </header>
       <main class="content">
         <section class="profile">
-          <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар" />
+          <img class="profile__avatar"  src = "" alt="Аватар" />
+          <!-- src="<%=require('./images/avatar.jpg')%>" -->
           <div class="profile__info">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <h1 class="profile__title"></h1>
             <button
               class="profile__edit-button"
               type="button"
               aria-label="Исправить"
             ></button>
-            <p class="profile__subtitle">Исследователь океана</p>
+            <p class="profile__subtitle"></p>
           </div>
           <button
             class="profile__add-button"
@@ -34,7 +35,7 @@
         <section class="elements"></section>
       </main>
       <footer class="footer">
-        <p class="footer__copyright">&copy; 2023. Zina Artyugina</p>
+        <p class="footer__copyright">&copy; 2023. L Artyugina</p>
       </footer>
       <div class="popup popup_add_profile" name="popup_add_profile">
         <div class="popup__conteiner">
@@ -89,7 +90,7 @@
                 id="cardHeading-input"
                 type="text"
                 class="popup__item popup__item_el_cardHeading"
-                name="name"
+                name="cardName"
                 placeholder="Название"
                 minlength="2"
                 maxlength="30"
@@ -101,7 +102,7 @@
                 id="cardLink-input"
                 type="url"
                 class="popup__item popup__item_el_cardLink"
-                name="link"
+                name="cardLink"
                 placeholder="Ссылка на картинку"
                 required
               />
@@ -144,7 +145,12 @@
         <button class="element__trash" type="button"></button>
         <figcaption class="element__description">
           <h2 class="element__title"></h2>
-          <button class="element__button" type="button"></button>
+          <div class = "element__like">
+            <button class="element__button" type="button"></button>
+            <p class="element__counter">0</p>
+          </div>
+          
+
         </figcaption>
       </figure>
     </template>

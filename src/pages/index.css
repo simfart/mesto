@@ -1,3 +1,8 @@
+/* * {
+    outline: 1px solid #ff3300;
+} */
+
+
 @import url("../vendor/normalize.css");
 @import url("../vendor/fonts/font.css");
 
@@ -49,3 +54,11 @@
 @import url("../blocks/popup/__item/_error/popup__item_error.css");
 @import url("../blocks/popup/__button/_invalid/popup__button_invalid.css");
 @import url("../blocks/popup/__error/popup__error.css");
+
+.element__counter{
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    margin: 0 0 0 0;
+    text-align: center;    
+  }

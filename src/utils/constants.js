@@ -8,6 +8,8 @@ const popupCardElement = document.querySelector('[name="popup_add_card"]');
 const btnPopupCards = document.querySelector(".profile__add-button");
 const cardContainer = document.querySelector(".elements");
 
+//Профиль 
+
 
 const config = {
   formSelector: ".popup__form",
