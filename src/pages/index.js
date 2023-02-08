@@ -51,29 +51,41 @@ const openProfilePopup = () => {
   const { name, description } = userInfo.getUserInfo();
   nameInput.value = name;
   jobInput.value = description;
-  aditProfileForm.open();
+  editProfileForm.open();
   formProfileValid.resetValidation();
 };
 
 
 // обработчик формы редактирования имени
-const submitFormtHandler = (data) => {
-  api.editlUserInfo(data)
+
+// обработчик формы 
+
+// обработчик формы 
+
+// const submitFormtHandler = (e, values) => { 
+//   userInfo.setUserInfo(values.avatarName, values.avatarDescription); 
+//   aditProfileForm.close(); 
+// }; 
+
+const submitFormtHandler = (e, values) => {
+  e.preventDefault();
+  api.editlUserInfo(values)
     .then(() => {
-      userInfo.setUserInfo(data.avatarName, data.avatarDescription);
+      userInfo.setUserInfo(values.avatarName, values.avatarDescription, values.avatar);     
     })
     .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
+      console.log('здесь ошибка', err); // выведем ошибку в консоль
     });
-  aditProfileForm.close();
+    
+editProfileForm.close();
 };
 
 
-const aditProfileForm = new PopupWithForm(
+const editProfileForm = new PopupWithForm(
   ".popup_add_profile",
   submitFormtHandler,
 );
-aditProfileForm.setEventListeners();
+editProfileForm.setEventListeners();
 
 
 // Создание экземпляра класса Section

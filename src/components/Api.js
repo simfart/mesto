@@ -55,10 +55,7 @@ export default class Api {
     });   
   }
 
-
-  
-
-  getInitialUserInfo() {
+getInitialUserInfo() {
     return fetch(`${this._baseUrl}/users/me/`, {
       headers: this._headers,
     }).then((res) => {
@@ -77,14 +74,15 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: data.avatarName,
-        about: data.avatarDescription,
-      }),
+        about: data.avatarDescription
+      })
     }).then((res) => {
-      if (res.ok) {
+      if (res.ok) {        
         return res.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    })
+  
   }
 
  
