@@ -62,3 +62,11 @@
     margin: 0 0 0 0;
     text-align: center;    
   }
+
+ .popup_confirm{
+    font-family: 'Inter'
+ } 
+
+ .popup__button_confirm{
+    margin-top: 32px;
+ }

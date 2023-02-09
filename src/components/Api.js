@@ -55,6 +55,21 @@ export default class Api {
     });   
   }
 
+  deleteCards(idCard) {
+    return fetch(`${this._baseUrl}/cards/${idCard}/`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });   
+  }
+
+  
+
+
 getInitialUserInfo() {
     return fetch(`${this._baseUrl}/users/me/`, {
       headers: this._headers,
@@ -91,16 +106,4 @@ getInitialUserInfo() {
 }
 
 
- //   deleteUserCards() {
-    //     return fetch(`${this._baseUrl}/cards/`, {
-    //       method: 'DELETE',
-    //       headers: this._headers
-    //     })
-
-    //       .then((res) => {
-    //         if (res.ok) {
-    //           return res.json();
-    //         }
-    //         return Promise.reject(`Ошибка: ${res.status}`);
-    //       })
-    //   }
+ 
