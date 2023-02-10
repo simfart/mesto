@@ -136,8 +136,7 @@ function newCard(data) {
       handleLikesDelele: (idCard) => {   // удаление лайков
         api.deleteLikes(idCard)
           .then((data) => {
-            card.likeCards(data)
-            console.log(idCard)
+            card.likeCards(data)           
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
