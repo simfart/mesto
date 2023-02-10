@@ -55,11 +55,12 @@ const openProfilePopup = () => {
 };
 
 // обработчик формы редактирования имени
-const submitFormtHandler = (values) => {
+const submitUserNameHandler = (values) => {
   editProfileForm.renderLoading(true);
   api.editlUserInfo(values)
     .then((res) => {
-      userInfo.setUserInfo(res)
+      userInfo.setUserInfo(res);
+      editProfileForm.close()
     })
     .catch((err) => {
       console.log('здесь ошибка', err); // выведем ошибку в консоль
@@ -67,13 +68,11 @@ const submitFormtHandler = (values) => {
     .finally(() => {
       editProfileForm.renderLoading(false)
     });
-
-  editProfileForm.close();
 };
 
 const editProfileForm = new PopupWithForm(
   ".popup_add_profile",
-  submitFormtHandler,
+  submitUserNameHandler,
 );
 editProfileForm.setEventListeners();
 
@@ -88,7 +87,8 @@ const submitAvatarHandler = (values) => {
   editAvatarForm.renderLoading(true);
   api.editAvatar(values)
     .then((res) => {
-      userInfo.setUserInfo(res)
+      userInfo.setUserInfo(res);
+      editAvatarForm.close()
     })
     .catch((err) => {
       console.log('здесь ошибка', err); // выведем ошибку в консоль
@@ -96,7 +96,6 @@ const submitAvatarHandler = (values) => {
     .finally(() => {
       editAvatarForm.renderLoading(false)
     });
-  editAvatarForm.close();
 };
 
 const editAvatarForm = new PopupWithForm(
@@ -136,20 +135,20 @@ function newCard(data) {
       handleLikesDelele: (idCard) => {   // удаление лайков
         api.deleteLikes(idCard)
           .then((data) => {
-            card.likeCards(data)           
+            card.likeCards(data)
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
           });
       },
 
-      handleCardDelete: (idCard) => {   // удаление лайков        
+      handleCardDelete: (idCard) => {   // удаление карточки      
         popupConfirm.open()
         popupConfirm.submitConfirm(() => {
           api.deleteCards(idCard)
             .then(() => {
-              card.deleteCards()
-              popupConfirm.close();
+              card.deleteCards();
+              popupConfirm.close()
             })
             .catch((err) => {
               console.log(err); // выведем ошибку в консоль
@@ -172,6 +171,7 @@ const submitCardFormtHandler = (data) => {
   api.createNewCard(data)
     .then((data) => {
       addCard(data);
+      addCardForm.close()
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -179,7 +179,6 @@ const submitCardFormtHandler = (data) => {
     .finally(() => {
       addCardForm.renderLoading(false)
     });
-  addCardForm.close();
 };
 
 // Попап добавление карточки

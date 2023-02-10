@@ -1,7 +1,6 @@
 export default class Popup {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector)
-        this._saveButton = this._popup.querySelector(".popup__button")
     }
 
     _handleEscClose = (e) => {
@@ -12,10 +11,7 @@ export default class Popup {
 
     open() {
         this._popup.classList.add("popup_opened");
-        document.addEventListener("keyup", this._handleEscClose);
-        if (this._saveButton) {
-            this._saveButtonFirstText = this._saveButton.textContent
-        }
+        document.addEventListener("keyup", this._handleEscClose);      
     }
 
     close() {
@@ -34,13 +30,5 @@ export default class Popup {
                 this.close()
             }
         })
-    }
-
-    renderLoading(isLoading) {
-        if (isLoading) {
-            this._saveButton.textContent = "Сохранение..."
-        } else {
-            this._saveButton.textContent = this._saveButtonFirstText
-        }
     }
 }

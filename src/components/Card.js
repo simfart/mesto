@@ -42,8 +42,7 @@ export default class Card {
     this._likeButton = this._element.querySelector(".element__button");
     this._trashButton = this._element.querySelector(".element__trash");
     
-    this._isLiked();
-    this._removeTrashButton()
+    this._isLiked();    
     this._setEventListeners();
 
     // Добавим данные
@@ -60,11 +59,7 @@ export default class Card {
     this._likeButton.addEventListener("click", () => {
       this._handleLikeButtonClick();
     });
-
-    this._trashButton.addEventListener("click", () => {
-      this._handleCardDelete(this._idCard);
-    });
-
+    this._removeTrashButton();
     this._cardImage.addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
     });
@@ -110,6 +105,10 @@ export default class Card {
     ) {
       // console.log('не моя')
       this._trashButton.remove()
+    } else{
+      this._trashButton.addEventListener("click", () => {
+        this._handleCardDelete(this._idCard);
+      })
     }
   }
 }
