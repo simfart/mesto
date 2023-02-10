@@ -1,11 +1,12 @@
 import {
   btnPopupProfile,
+  btnUpdateAvatar,
   formElement,
   nameInput,
   jobInput,
   popupCardElement,
   btnPopupCards,
-  // cardContainer,
+  popupAvatarElement,
   config,
 } from "../utils/constants.js";
 import FormValidator from "../components/FormValidator.js";
@@ -34,7 +35,7 @@ let myId
 Promise.all([api.getInitialUserInfo(), api.getInitialUserCards()])
   .then(([resUserInfo, resCards]) => {
     myId = resUserInfo._id
-    userInfo.setUserInfo(resUserInfo.name, resUserInfo.about, resUserInfo.avatar)
+    userInfo.setUserInfo(resUserInfo)
     defaultCardList.renderItems(resCards)
   })
   .catch((err) => {
@@ -58,11 +59,10 @@ const openProfilePopup = () => {
 
 
 // обработчик формы редактирования имени
-const submitFormtHandler = (e, values) => {
-  e.preventDefault();
+const submitFormtHandler = (values) => {
   api.editlUserInfo(values)
-    .then(() => {
-      userInfo.setUserInfo(values.avatarName, values.avatarDescription, values.avatar);     
+    .then((res) => {
+         userInfo.setUserInfo(res)
     })
     .catch((err) => {
       console.log('здесь ошибка', err); // выведем ошибку в консоль
@@ -71,12 +71,41 @@ const submitFormtHandler = (e, values) => {
 editProfileForm.close();
 };
 
-
 const editProfileForm = new PopupWithForm(
   ".popup_add_profile",
   submitFormtHandler,
 );
 editProfileForm.setEventListeners();
+
+//Ф-ция открытия попапа редактирования Аватара
+const openAvatarPopup = () => {
+  editAvatarForm.open();
+  popupAvatardValid.resetValidation();
+};
+
+// обработчик формы Аватара
+const submitAvatarHandler = (values) => {
+  api.editAvatar(values)
+    .then((res) => {
+      userInfo.setUserInfo(res)
+    })
+    .catch((err) => {
+      console.log('здесь ошибка', err); // выведем ошибку в консоль
+    });
+    
+    editAvatarForm.close();
+};
+
+const editAvatarForm = new PopupWithForm(
+  ".popup_update_avatar",
+  submitAvatarHandler
+);
+editAvatarForm.setEventListeners();
+
+
+
+
+
 
 
 // Создание экземпляра класса Section
@@ -105,8 +134,7 @@ function newCard(data) {
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
-          });
-       
+          });       
       },
       handleLikesDelele: (idCard) => {   // удаление лайков
         api.deleteLikes(idCard)
@@ -119,8 +147,7 @@ function newCard(data) {
           });
       },
 
-      handleCardDelete: (idCard) => {   // удаление лайков
-        
+      handleCardDelete: (idCard) => {   // удаление лайков        
         popupConfirm.open()
         popupConfirm.submitConfirm(() =>{
           api.deleteCards(idCard)        
@@ -144,9 +171,8 @@ const addCard = (item) => {
 
 
 //Добавление карточек из  попапа
-const submitCardFormtHandler = (e, data) => {
-  e.preventDefault();
-  api.createNewCard(data)
+const submitCardFormtHandler = (data) => {
+   api.createNewCard(data)
     .then((data) => {
       addCard(data);
     })
@@ -164,28 +190,35 @@ const addCardForm = new PopupWithForm(
 addCardForm.setEventListeners();
 
 
-// Попап confirm
+// Попап подтверждения
 const popupConfirm = new PopupWithConfirmation(".popup_confirm")
 popupConfirm.setEventListeners();
 
 
+
+
+// Попап открытия картинки
 const popupWithImage = new PopupWithImage(".popup_img-background");
 popupWithImage.setEventListeners();
 
-// Открытие попапа редактирования карточек
-const openCardslePopup = () => {
-  addCardForm.open();
-  popupCardValid.resetValidation();
-};
 // Открытие попапа открытия картинки
 function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 }
 
+// Открытие попапа редактирования карточек
+const openCardslePopup = () => {
+  addCardForm.open();
+  popupCardValid.resetValidation();
+  
+}
+
+
 
 
 btnPopupProfile.addEventListener("click", openProfilePopup);
 btnPopupCards.addEventListener("click", openCardslePopup);
+btnUpdateAvatar.addEventListener("click", openAvatarPopup);
 
 
 const formProfileValid = new FormValidator(config, formElement);
@@ -194,5 +227,7 @@ formProfileValid.enableValidation();
 const popupCardValid = new FormValidator(config, popupCardElement);
 popupCardValid.enableValidation();
 
+const popupAvatardValid = new FormValidator(config, popupAvatarElement,);
+popupAvatardValid.enableValidation();
 
 

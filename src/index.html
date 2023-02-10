@@ -15,8 +15,9 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__avatar" src="" alt="Аватар" />
-        <!-- src="<%=require('./images/avatar.jpg')%>" -->
+        <button type="button" class="profile__conteiner"><img class="profile__avatar" src="" alt="Аватар" /></button>
+            
+       
         <div class="profile__info">
           <h1 class="profile__title"></h1>
           <button class="profile__edit-button" type="button" aria-label="Исправить"></button>
@@ -89,6 +90,25 @@
         <button class="popup__button popup__button_confirm" type="submit" aria-label="Да">
           Да
         </button>
+        <button class="popup__close" aria-label="Закрыть" type="button"></button>
+      </form>
+    </div>
+  </div>
+
+  
+  <div class="popup popup_update_avatar" name="popup_update_avatar">
+    <div class="popup__conteiner">
+      <form name="formUpdateAvatar" class="popup__form" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <fieldset class="popup__info">
+           <input id="cardLink-input" type="url" class="popup__item popup__item_el_cardLink" name="avatarLink"
+            placeholder="Ссылка на картинку" required />
+          <span id="cardLink-input-error" class="popup__error"></span>
+          <button class="popup__button popup__button_add_card popup__button_invalid" type="submit"
+            aria-label="Создать">
+            Создать
+          </button>
+        </fieldset>
         <button class="popup__close" aria-label="Закрыть" type="button"></button>
       </form>
     </div>

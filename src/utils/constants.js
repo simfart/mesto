@@ -1,7 +1,9 @@
 const btnPopupProfile = document.querySelector(".profile__edit-button");
+const btnUpdateAvatar = document.querySelector(".profile__conteiner");
 const formElement = document.querySelector('[name="formPopup"]');
 const nameInput = formElement.querySelector(".popup__item_el_heading");
 const jobInput = formElement.querySelector(".popup__item_el_subheading");
+const popupAvatarElement = document.querySelector('[name="popup_update_avatar"]');
 
 // Переменные для попапа добавления карточек
 const popupCardElement = document.querySelector('[name="popup_add_card"]');
@@ -21,4 +23,4 @@ const config = {
 };
 
 
-export { btnPopupProfile, formElement, nameInput, jobInput, popupCardElement, btnPopupCards, cardContainer, config }
+export { btnPopupProfile, btnUpdateAvatar, formElement, nameInput, jobInput, popupCardElement, btnPopupCards, cardContainer, config, popupAvatarElement }

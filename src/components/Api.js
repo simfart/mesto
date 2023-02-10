@@ -14,7 +14,7 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
- 
+
   createNewCard(data) {
     return fetch(`${this._baseUrl}/cards/`, {
       method: "POST",
@@ -52,7 +52,7 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
-    });   
+    });
   }
 
   deleteCards(idCard) {
@@ -64,13 +64,13 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
-    });   
+    });
   }
 
-  
 
 
-getInitialUserInfo() {
+
+  getInitialUserInfo() {
     return fetch(`${this._baseUrl}/users/me/`, {
       headers: this._headers,
     }).then((res) => {
@@ -92,18 +92,27 @@ getInitialUserInfo() {
         about: data.avatarDescription
       })
     }).then((res) => {
-      if (res.ok) {        
+      if (res.ok) {
         return res.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-  
   }
 
- 
+  editAvatar(data) {
+    return fetch(`${this._baseUrl}/users/me/avatar/`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatarLink        
+      })
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+  }
 
-  
+
 }
-
-
- 
