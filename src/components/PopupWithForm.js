@@ -14,11 +14,10 @@ export default class PopupWithForm extends Popup {
     this._inputs.forEach(input => {
       const name = input.name
       const value = input.value
-      values[name] = value      
+      values[name] = value
     })
 
     return values
-
   }
 
   setEventListeners() {
@@ -26,7 +25,6 @@ export default class PopupWithForm extends Popup {
     this._form.addEventListener('submit', (e) => {
       this._handleSubmit(this._getInputValues())
       e.preventDefault();
-   
     })
   }
 

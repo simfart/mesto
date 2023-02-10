@@ -67,9 +67,6 @@ export default class Api {
     });
   }
 
-
-
-
   getInitialUserInfo() {
     return fetch(`${this._baseUrl}/users/me/`, {
       headers: this._headers,
@@ -80,8 +77,6 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
-
-
 
   editlUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me/`, {
@@ -104,7 +99,7 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.avatarLink        
+        avatar: data.avatarLink
       })
     }).then((res) => {
       if (res.ok) {
@@ -113,6 +108,5 @@ export default class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     })
   }
-
 
 }

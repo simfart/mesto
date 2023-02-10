@@ -16,8 +16,6 @@
     <main class="content">
       <section class="profile">
         <button type="button" class="profile__conteiner"><img class="profile__avatar" src="" alt="Аватар" /></button>
-            
-       
         <div class="profile__info">
           <h1 class="profile__title"></h1>
           <button class="profile__edit-button" type="button" aria-label="Исправить"></button>
@@ -28,7 +26,7 @@
       <section class="elements"></section>
     </main>
     <footer class="footer">
-      <p class="footer__copyright">&copy; 2023. L Artyugina</p>
+      <p class="footer__copyright">&copy; 2023. Lyubov Artyugina</p>
     </footer>
 
     <div class="popup popup_add_profile" name="popup_add_profile">
@@ -50,6 +48,7 @@
         </form>
       </div>
     </div>
+
     <div class="popup popup_add_card" name="popup_add_card">
       <div class="popup__conteiner">
         <form name="cardPopup" class="popup__form" novalidate>
@@ -95,25 +94,24 @@
     </div>
   </div>
 
-  
+
   <div class="popup popup_update_avatar" name="popup_update_avatar">
     <div class="popup__conteiner">
       <form name="formUpdateAvatar" class="popup__form" novalidate>
         <h2 class="popup__title">Обновить аватар</h2>
         <fieldset class="popup__info">
-           <input id="cardLink-input" type="url" class="popup__item popup__item_el_cardLink" name="avatarLink"
+          <input id="cardLink-input" type="url" class="popup__item popup__item_el_cardLink" name="avatarLink"
             placeholder="Ссылка на картинку" required />
           <span id="cardLink-input-error" class="popup__error"></span>
-          <button class="popup__button popup__button_add_card popup__button_invalid" type="submit"
-            aria-label="Создать">
-            Создать
+          <button class="popup__button popup__button_add_card popup__button_invalid" type="submit" aria-label="Создать">
+            Обновить
           </button>
         </fieldset>
         <button class="popup__close" aria-label="Закрыть" type="button"></button>
       </form>
     </div>
   </div>
-  
+
   <template id="element-template">
     <figure class="element">
       <img class="element__photo" src=" " alt=" " />

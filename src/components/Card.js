@@ -14,7 +14,6 @@ export default class Card {
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
-    // this._id = data._id;
     this._handleCardDelete = handleCardDelete;
     this._handleLikes = handleLikes;
     this._handleLikesDelele = handleLikesDelele;
@@ -42,9 +41,9 @@ export default class Card {
 
     this._likeButton = this._element.querySelector(".element__button");
     this._trashButton = this._element.querySelector(".element__trash");
-    this._isLiked();
     
-  this._removeTrashButton()
+    this._isLiked();
+    this._removeTrashButton()
     this._setEventListeners();
 
     // Добавим данные
@@ -52,7 +51,6 @@ export default class Card {
     this._cardImage.alt = this._name;
     this._element.querySelector(".element__title").textContent = this._name;
     this._likeCounter.textContent = this._likes.length;
-// console.log(this._owner._id)
 
     // Вернём элемент наружу
     return this._element;
@@ -63,8 +61,8 @@ export default class Card {
       this._handleLikeButtonClick();
     });
 
-    this._trashButton.addEventListener("click", () => {  
-        this._handleCardDelete(this._idCard);
+    this._trashButton.addEventListener("click", () => {
+      this._handleCardDelete(this._idCard);
     });
 
     this._cardImage.addEventListener("click", () => {
@@ -73,7 +71,7 @@ export default class Card {
   }
 
 
-// Проверка на лайк
+  // Проверка на лайк
   _isLiked() {
     if (
       this._likes.some((user) => {
@@ -94,16 +92,10 @@ export default class Card {
   }
 
   // Для кнопки trash
-  deleteCards() {   
+  deleteCards() {
     this._element.remove();
     this._element = null;
   }
-
-  // _handleDeleteClick() { 
-  //   console.log('xnj')  
-  //   // this._element.remove();
-  //   // this._element = null;
-  // }
 
   likeCards(data) {
     this._likes = data.likes;
@@ -112,7 +104,7 @@ export default class Card {
   }
 
   // Для иконки trash
-  _removeTrashButton(){
+  _removeTrashButton() {
     if (
       this._owner._id !== this._myId
     ) {

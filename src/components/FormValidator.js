@@ -20,7 +20,6 @@ export default class FormValidator {
     input.classList.remove(this._config.inputErrorClass);
   }
 
-
   _checkInputValidity = (input) => {
     if (input.validity.valid) {
       this._hideError(input)
@@ -54,7 +53,6 @@ export default class FormValidator {
     this._inputs.forEach((input) => {
       this._hideError(input);
     });
-
   }
 
   enableValidation() {
